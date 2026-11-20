@@ -6,13 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import SocialButtons from "@/components/SocialButtons";
+import { isValidEmail } from "@/lib/validate";
 
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
 
-  // without login, puts here
+  
   useEffect(() => {
     if (searchParams.get("reason") === "login-required") {
       toast.error("এই পেজ দেখতে আগে সাইন ইন করুন", { id: "login-required" });
@@ -24,6 +25,16 @@ function SignInForm() {
     const form = new FormData(e.currentTarget);
     const email = String(form.get("email")).trim();
     const password = String(form.get("password"));
+
+     
+    if (!isValidEmail(email)) {
+      toast.error("সঠিক ইমেইল ঠিকানা দিন (যেমন: you@example.com)");
+      return;
+    }
+    if (!password) {
+      toast.error("পাসওয়ার্ড লিখুন");
+      return;
+    }
 
     setLoading(true);
     const { error } = await authClient.signIn.email({ email, password });
@@ -53,13 +64,12 @@ function SignInForm() {
       </div>
 
       <div className="mx-auto w-full max-w-md rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} noValidate className="space-y-4">
           <label className="block space-y-1">
             <span className="text-sm font-medium">ইমেইল</span>
             <input
               name="email"
               type="email"
-              required
               placeholder="you@example.com"
               className="input w-full"
             />
@@ -70,8 +80,7 @@ function SignInForm() {
             <input
               name="password"
               type="password"
-              required
-              placeholder="কমপক্ষে ৮ অক্ষর"
+              placeholder="আপনার পাসওয়ার্ড"
               className="input w-full"
             />
           </label>
