@@ -15,8 +15,7 @@ export default function SortableProducts({
   const sorted = sortProducts(products, sort);
 
   return (
-    <>
-      {/* সাজান: ডানদিকে, আলাদা কার্ডে */}
+    <> 
       <div className="flex items-center justify-end gap-2 rounded-2xl border border-base-300 bg-base-100 p-3">
         <label htmlFor="sort" className="text-sm text-base-content/70">
           সাজান:
