@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCategories } from "@/lib/api";
 import { todayBn } from "@/lib/format";
 import CategoryNav from "./CategoryNav";
+import AuthMenu from "./AuthMenu";
 
 export default async function Navbar() {
   const categories = await getCategories();
@@ -21,14 +22,7 @@ export default async function Navbar() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <Link href="/signin" className="btn btn-ghost btn-sm sm:btn-md">
-            সাইন ইন
-          </Link>
-          <Link href="/signup" className="btn btn-primary btn-sm sm:btn-md">
-            সাইন আপ
-          </Link>
-        </div>
+        <AuthMenu />
       </div>
 
       <CategoryNav categories={categories} />

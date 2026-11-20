@@ -61,3 +61,16 @@ export function todayBn() {
     timeZone: "Asia/Dhaka",
   }).format(new Date());
 }
+
+ 
+export const unitShortText = (unit: string) => unitShortMap[unit] ?? unit;
+
+ 
+export function avgPriceText(value: number) {
+  if (Number.isInteger(value)) return `${toBn(value)} টাকা`;
+  const formatted = new Intl.NumberFormat("bn-BD", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+  return `${formatted} টাকা`;
+}
