@@ -3,6 +3,8 @@ import ProductSection from "@/components/ProductSection";
 import { getAllProducts } from "@/lib/api";
 import { changeColor, toBn } from "@/lib/format";
 import { getFallers, getRisers } from "@/lib/products";
+// refresh after every 1 hour
+export const revalidate = 3600;
 
 export default async function Home() {
   const products = await getAllProducts();
