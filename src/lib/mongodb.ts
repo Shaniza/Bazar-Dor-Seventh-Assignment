@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { attachDatabasePool } from "@vercel/functions";
 
 const uri = process.env.MONGODB_URI!;
 
@@ -13,12 +14,11 @@ const client =
     maxPoolSize: 5,
     serverSelectionTimeoutMS: 10000,
   });
+
 global._mongoClient = client;
 
  
-client.connect().catch((err) => {
-  console.error("MongoDB connect error:", err.message);
-});
+attachDatabasePool(client);
 
 export { client };
 export const db = client.db();
