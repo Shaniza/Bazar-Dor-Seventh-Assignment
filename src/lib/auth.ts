@@ -33,7 +33,8 @@ export const auth = betterAuth({
   "https://bazar-dor-fawn-three.vercel.app",
   "https://*.vercel.app",
 ],
-  database: mongodbAdapter(db, { client }),
+database: mongodbAdapter(db),
+
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
